@@ -9,7 +9,7 @@ export interface IHTMLLoader {
 
 export class HTMLLoader implements IHTMLLoader {
   private static instance: HTMLLoader;
-  public static getInstance (): HTMLLoader {
+  public static getInstance (): HTMLLoader { //TODO: 整个项目暴露出一个初始化实例的方法，显然是单例模式的加载
     if (!this.instance) {
       this.instance = new HTMLLoader()
     }
@@ -24,6 +24,7 @@ export class HTMLLoader implements IHTMLLoader {
   public run (app: AppInterface, successCb: CallableFunction): void {
     const appName = app.name
     const htmlUrl = app.ssrUrl || app.url
+    //TODO: 抓取 html页面
     fetchSource(htmlUrl, appName, { cache: 'no-cache' }).then((htmlStr: string) => {
       if (!htmlStr) {
         const msg = 'html is empty, please check in detail'
@@ -33,13 +34,13 @@ export class HTMLLoader implements IHTMLLoader {
 
       htmlStr = this.formatHTML(htmlUrl, htmlStr, appName)
 
-      successCb(htmlStr, app)
+      successCb(htmlStr, app) //TODO: html模板分好类后，就执行回调
     }).catch((e) => {
       logError(`Failed to fetch data from ${app.url}, micro-app stop rendering`, appName, e)
       app.onLoadError(e)
     })
   }
-
+  //TODO: 将拉取下来的html进行格式化，对head 和 body 进行替换
   private formatHTML (htmlUrl: string, htmlStr: string, appName: string) {
     return this.processHtml(htmlUrl, htmlStr, appName, microApp.options.plugins)
       .replace(/<head[^>]*>[\s\S]*?<\/head>/i, (match) => {

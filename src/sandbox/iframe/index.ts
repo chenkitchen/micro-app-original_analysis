@@ -79,7 +79,7 @@ export default class IframeSandbox {
     const rawLocation = globalEnv.rawWindow.location
     const browserHost = rawLocation.protocol + '//' + rawLocation.host
 
-    this.deleteIframeElement = this.createIframeElement(appName, browserHost)
+    this.deleteIframeElement = this.createIframeElement(appName, browserHost) //TODO: 创建 iframe沙箱
     this.microAppWindow = this.iframe!.contentWindow
 
     this.patchIframe(this.microAppWindow, (resolve: CallableFunction) => {

@@ -27,7 +27,7 @@ import globalEnv from '../libs/global_env'
  * transform html string to dom
  * @param str string dom
  */
-function getWrapElement (str: string): HTMLElement {
+function getWrapElement (str: string): HTMLElement { //TODO: 现在流行，创建一个标签元素，将模板放进去进行转化吗？？
   const wrapDiv = pureCreateElement('div')
 
   wrapDiv.innerHTML = str
@@ -50,7 +50,7 @@ function flatChildren (
   const children = Array.from(parent.children)
 
   children.length && children.forEach((child) => {
-    flatChildren(child as HTMLElement, app, microAppHead, fiberStyleTasks)
+    flatChildren(child as HTMLElement, app, microAppHead, fiberStyleTasks) //TODO: 进行递归处理
   })
 
   for (const dom of children) {
@@ -66,7 +66,7 @@ function flatChildren (
       if (dom.hasAttribute('exclude')) {
         parent.replaceChild(document.createComment('style element with exclude attribute ignored by micro-app'), dom)
       } else if (app.scopecss && !dom.hasAttribute('ignore')) {
-        injectFiberTask(fiberStyleTasks, () => scopedCSS(dom, app))
+        injectFiberTask(fiberStyleTasks, () => scopedCSS(dom, app)) //TODO:如果是样式 就这样处理 css 会在这个方法里给样式添加前缀 来实现样式隔离
       }
     } else if (isScriptElement(dom)) {
       extractScriptElement(dom, parent, app)
@@ -105,7 +105,7 @@ export function extractSourceDom (htmlStr: string, app: AppInterface): void {
 
   const fiberStyleTasks: fiberTasks = app.isPrefetch || app.fiber ? [] : null
 
-  flatChildren(wrapElement, app, microAppHead, fiberStyleTasks)
+  flatChildren(wrapElement, app, microAppHead, fiberStyleTasks) //TODO: 将所有子元素进行 处理
 
   /**
    * Style and link are parallel, because it takes a lot of time for link to request resources. During this period, style processing can be performed to improve efficiency.
@@ -113,7 +113,7 @@ export function extractSourceDom (htmlStr: string, app: AppInterface): void {
   const fiberStyleResult = serialExecFiberTasks(fiberStyleTasks)
 
   if (app.source.links.size) {
-    fetchLinksFromHtml(wrapElement, app, microAppHead, fiberStyleResult)
+    fetchLinksFromHtml(wrapElement, app, microAppHead, fiberStyleResult) //TODO: 处理link 标签
   } else if (fiberStyleResult) {
     fiberStyleResult.then(() => app.onLoad(wrapElement))
   } else {
@@ -121,7 +121,7 @@ export function extractSourceDom (htmlStr: string, app: AppInterface): void {
   }
 
   if (app.source.scripts.size) {
-    fetchScriptsFromHtml(wrapElement, app)
+    fetchScriptsFromHtml(wrapElement, app) //TODO: 处理script标签
   } else {
     app.onLoad(wrapElement)
   }

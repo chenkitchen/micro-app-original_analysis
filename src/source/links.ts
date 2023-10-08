@@ -174,7 +174,7 @@ export function fetchLinksFromHtml (
  * @param microAppHead micro-app-head
  * @param app app instance
  */
-export function fetchLinkSuccess (
+export function fetchLinkSuccess ( //TODO: 会将 link 标签中的样式 变成 style标签
   address: string,
   code: string,
   microAppHead: Element,

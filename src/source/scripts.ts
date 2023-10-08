@@ -435,7 +435,7 @@ export function execScripts (
       deferScriptInfo.forEach(([address, scriptInfo]) => {
         if (isString(scriptInfo.code)) {
           injectFiberTask(fiberScriptTasks, () => {
-            runScript(address, app, scriptInfo, initHook)
+            runScript(address, app, scriptInfo, initHook) //TODO: 核心方法 
             !isTypeModule(app, scriptInfo) && initHook(false)
           })
         }
@@ -506,7 +506,7 @@ export function runScript (
      * TODO: 优化逻辑
      * 是否是内联模式应该由外部传入，这样自外而内更加统一，逻辑更加清晰
      */
-    if (isInlineMode(app, scriptInfo)) {
+    if (isInlineMode(app, scriptInfo)) { //TODO: 创建一个壳？？？
       const scriptElement = replaceElement || pureCreateElement('script')
       runCode2InlineScript(
         address,

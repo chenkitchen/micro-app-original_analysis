@@ -87,7 +87,7 @@ export type proxyWindow = WindowProxy & MicroAppWindowDataType
 
 const { createMicroEventSource, clearMicroEventSource } = useMicroEventSource()
 
-export default class WithSandBox implements WithSandBoxInterface {
+export default class WithSandBox implements WithSandBoxInterface { //TODO: 这个版本，沙箱不用 Proxy ？
   static activeCount = 0 // number of active sandbox
   private active = false
   private windowEffect: CommonEffectHook

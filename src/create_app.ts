@@ -126,7 +126,7 @@ export default class CreateApp implements AppInterface {
   // Load resources
   public loadSourceCode (): void {
     this.setAppState(appStates.LOADING)
-    HTMLLoader.getInstance().run(this, extractSourceDom)
+    HTMLLoader.getInstance().run(this, extractSourceDom) //TODO: 回调是一个抽离源码中的dom元素
   }
 
   /**
@@ -285,11 +285,11 @@ export default class CreateApp implements AppInterface {
           dispatchBeforeMount()
         }
 
-        this.setAppState(appStates.MOUNTING)
+        this.setAppState(appStates.MOUNTING) //TODO: 改变应用的状态
         // TODO: 将所有cloneContainer中的'as Element'去掉，兼容shadowRoot的场景
         cloneContainer(this.container as Element, this.source.html as Element, !this.umdMode)
 
-        this.sandBox?.start({
+        this.sandBox?.start({//TODO: 开启沙箱（js 需要在沙箱中运行）
           umdMode: this.umdMode,
           baseroute,
           defaultPage,
@@ -300,7 +300,7 @@ export default class CreateApp implements AppInterface {
           // update element info of html
           this.sandBox?.actionBeforeExecScripts(this.container)
           // if all js are executed, param isFinished will be true
-          execScripts(this, (isFinished: boolean) => {
+          execScripts(this, (isFinished: boolean) => { //TODO: 将 this 放在 沙箱中执行
             if (!this.umdMode) {
               const { mount, unmount } = this.getUmdLibraryHooks()
               /**
@@ -661,7 +661,7 @@ export default class CreateApp implements AppInterface {
   private createSandbox (): void {
     if (this.useSandbox && !this.sandBox) {
       if (this.iframe) {
-        this.sandBox = new IframeSandbox(this.name, this.url)
+        this.sandBox = new IframeSandbox(this.name, this.url) //TODO: 创建 iframe沙箱
       } else {
         this.sandBox = new WithSandBox(this.name, this.url)
       }
