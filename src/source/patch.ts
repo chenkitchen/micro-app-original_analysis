@@ -438,7 +438,7 @@ export function patchElementAndDocument (): void {
     return globalEnv.rawElementQuerySelectorAll.call(target, selectors)
   }
 
-  // rewrite setAttribute, complete resource address
+  // rewrite setAttribute, complete resource address //TODO: 重写了 setAttribute 
   rawRootElement.prototype.setAttribute = function setAttribute (key: string, value: any): void {
     const appName = this.__MICRO_APP_NAME__ || getCurrentAppName()
     if (

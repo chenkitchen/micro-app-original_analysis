@@ -282,7 +282,7 @@ export class MicroApp extends EventCenterForBaseApp implements MicroAppBaseType 
   reload = reload
   renderApp = renderApp
   start (options?: OptionsType): void {
-    if (!isBrowser || !window.customElements) {
+    if (!isBrowser || !window.customElements) { //TODO: 判断是否兼容
       return logError('micro-app is not supported in this environment')
     }
 
@@ -297,7 +297,7 @@ export class MicroApp extends EventCenterForBaseApp implements MicroAppBaseType 
 
     this.hasInit = true
 
-    if (options?.tagName) {
+    if (options?.tagName) { //TODO: 子应用标签，可以通过 传入 tagname 进行更改，但是必须以 `micro-app`为前缀
       if (/^micro-app(-\S+)?/.test(options.tagName)) {
         this.tagName = options.tagName
       } else {
@@ -305,7 +305,7 @@ export class MicroApp extends EventCenterForBaseApp implements MicroAppBaseType 
       }
     }
 
-    initGlobalEnv()
+    initGlobalEnv() //TODO: 初始化全局的环境变量
 
     if (globalEnv.rawWindow.customElements.get(this.tagName)) {
       return logWarn(`element ${this.tagName} is already defined`)
@@ -313,11 +313,11 @@ export class MicroApp extends EventCenterForBaseApp implements MicroAppBaseType 
 
     if (isPlainObject<OptionsType>(options)) {
       this.options = options
-      options['disable-scopecss'] = options['disable-scopecss'] ?? options.disableScopecss
-      options['disable-sandbox'] = options['disable-sandbox'] ?? options.disableSandbox
+      options['disable-scopecss'] = options['disable-scopecss'] ?? options.disableScopecss //TODO: 样式隔离是否失效
+      options['disable-sandbox'] = options['disable-sandbox'] ?? options.disableSandbox //TODO: 沙箱是否失效
 
       // load app assets when browser is idle
-      options.preFetchApps && preFetch(options.preFetchApps)
+      options.preFetchApps && preFetch(options.preFetchApps) //TODO: 预加载操作
 
       // load global assets when browser is idle
       options.globalAssets && getGlobalAssets(options.globalAssets)
@@ -337,7 +337,7 @@ export class MicroApp extends EventCenterForBaseApp implements MicroAppBaseType 
     }
 
     // define customElement after init
-    defineElement(this.tagName)
+    defineElement(this.tagName) //TODO: 核心 定义自定义元素
   }
 }
 

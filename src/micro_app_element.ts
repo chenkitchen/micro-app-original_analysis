@@ -346,9 +346,9 @@ export function defineElement (tagName: string): void {
       return true
     }
 
-    // create app instance
+    // create app instance //TODO: 处理应用 的创建
     private handleCreateApp (): void {
-      const createAppInstance = () => new CreateApp({
+      const createAppInstance = () => new CreateApp({ //TODO: 创建一个 应用的实例
         name: this.appName,
         url: this.appUrl,
         container: this.shadowRoot ?? this,
@@ -579,6 +579,8 @@ export function defineElement (tagName: string): void {
         globalEnv.rawSetAttribute.call(this, key, value)
       }
     }
+
+    //TODO: 父子应用通信的 setData 和 getData ; 通过，在micro-app 标签中添加 data，来进行传递 和监控修改
 
     /**
      * Data from the base application

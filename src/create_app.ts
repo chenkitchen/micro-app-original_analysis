@@ -119,8 +119,8 @@ export default class CreateApp implements AppInterface {
     this.prefetchLevel = prefetchLevel
 
     this.source = { html: null, links: new Set(), scripts: new Set() }
-    this.loadSourceCode()
-    this.createSandbox()
+    this.loadSourceCode() //TODO: 获取子应用的 源码 （加载资源一定是异步的）
+    this.createSandbox() //TODO: 创建沙箱（同步代码）
   }
 
   // Load resources

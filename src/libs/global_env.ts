@@ -71,7 +71,7 @@ export function initGlobalEnv (): void {
     const rawRootEventTarget = rawWindow.EventTarget
 
     // save patch raw methods, pay attention to this binding
-    const rawSetAttribute = rawRootElement.prototype.setAttribute
+    const rawSetAttribute = rawRootElement.prototype.setAttribute //TODO: 将这些原生方法 另存一份
     const rawAppendChild = rawRootElement.prototype.appendChild
     const rawInsertBefore = rawRootElement.prototype.insertBefore
     const rawReplaceChild = rawRootElement.prototype.replaceChild
@@ -98,7 +98,7 @@ export function initGlobalEnv (): void {
     const rawGetElementsByTagName = rawRootDocument.prototype.getElementsByTagName
     const rawGetElementsByName = rawRootDocument.prototype.getElementsByName
 
-    const ImageProxy = new Proxy(Image, {
+    const ImageProxy = new Proxy(Image, { //TODO: new Image 的时候，会执行该代理逻辑 也就是给元素增加一个属性
       construct (Target, args): HTMLImageElement {
         const elementImage = new Target(...args)
         const currentAppName = getCurrentAppName()
